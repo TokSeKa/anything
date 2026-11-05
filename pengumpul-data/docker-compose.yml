@@ -1,0 +1,14 @@
+# Jalan otomatis tiap hari di Docker (laptop dengan Docker Desktop atau VPS):
+#   docker compose up -d --build
+# Data tersimpan di folder ./data di sebelah file ini.
+services:
+  pengumpul:
+    build: .
+    container_name: pengumpul-data
+    restart: unless-stopped
+    command: ["python", "-m", "pengumpul", "jadwal", "--sekarang"]
+    environment:
+      TZ: Asia/Jakarta
+    volumes:
+      - ./data:/app/data
+      - ./simbol.toml:/app/simbol.toml:ro

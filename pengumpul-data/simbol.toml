@@ -1,0 +1,66 @@
+# Daftar data yang dikumpulkan setiap hari. Edit sesukamu, lalu jalankan lagi.
+# Kalau mau versi pribadi tanpa mengubah file ini, salin jadi `simbol.lokal.toml` (file itu yang dipakai kalau ada).
+
+[umum]
+folder_data = "data"          # relatif terhadap folder proyek, atau path lengkap
+jam_harian = "18:30"          # dipakai mode `jadwal` (Docker/VPS). IDX tutup 16:00 WIB, ringkasannya terbit sore.
+zona_waktu = "Asia/Jakarta"
+jeda_permintaan = 0.4         # detik antar permintaan, supaya tidak diblokir sumber data
+
+# ---------------------------------------------------------------- Yahoo Finance
+# Interval yang disimpan. Batas dari Yahoo: 1m hanya ±30 hari ke belakang, 2m–30m ±60 hari, 1h ±2 tahun,
+# 1d tanpa batas. Karena itu script harus jalan rutin supaya arsip 1 menit terus bertambah.
+[yahoo]
+aktif = true
+interval = ["1m", "5m", "1h", "1d"]
+prepost_us = false            # true = ikut ambil pre-market & after-hours saham US (1m/5m)
+
+# Saham IDX (kira-kira anggota LQ45 + beberapa saham besar; cek ulang sesuai kebutuhanmu)
+idx = [
+  "BBCA.JK", "BBRI.JK", "BMRI.JK", "BBNI.JK", "BBTN.JK", "BRIS.JK", "ARTO.JK",
+  "TLKM.JK", "ISAT.JK", "EXCL.JK", "TOWR.JK", "GOTO.JK",
+  "ASII.JK", "UNTR.JK", "ADRO.JK", "AADI.JK", "PTBA.JK", "ITMG.JK", "MEDC.JK", "PGAS.JK", "AKRA.JK", "ADMR.JK",
+  "ANTM.JK", "INCO.JK", "MDKA.JK", "MBMA.JK", "AMMN.JK", "BRPT.JK", "TPIA.JK", "PGEO.JK", "ESSA.JK",
+  "ICBP.JK", "INDF.JK", "UNVR.JK", "CPIN.JK", "JPFA.JK", "KLBF.JK", "SIDO.JK", "AMRT.JK", "MAPI.JK", "MAPA.JK", "ACES.JK",
+  "SMGR.JK", "INTP.JK", "CTRA.JK", "SMRA.JK", "BSDE.JK", "JSMR.JK", "INKP.JK", "TKIM.JK",
+]
+
+# Saham & ETF US
+us = [
+  "AAPL", "MSFT", "NVDA", "AMZN", "GOOGL", "META", "TSLA", "AVGO", "BRK-B", "JPM", "V", "LLY", "UNH", "XOM", "NFLX", "AMD",
+  "SPY", "QQQ", "IWM", "DIA", "GLD", "TLT", "EEM", "EIDO",
+]
+
+# Indeks & volatilitas
+indeks = ["^VIX", "^JKSE", "^GSPC", "^NDX", "^DJI", "^RUT", "DX-Y.NYB", "^TNX", "^N225", "^HSI"]
+
+# Forex (versi Yahoo, 1 menit). Tick forex diambil dari Dukascopy di bawah.
+forex = ["EURUSD=X", "GBPUSD=X", "USDJPY=X", "AUDUSD=X", "USDCHF=X", "USDCAD=X", "NZDUSD=X", "USDIDR=X", "SGDIDR=X", "JPYIDR=X"]
+
+# Futures komoditas
+komoditas = ["GC=F", "SI=F", "CL=F", "BZ=F", "NG=F", "HG=F", "PL=F", "ZC=F", "ZS=F", "KC=F"]
+
+# Kripto (opsional, hapus kalau tidak perlu)
+kripto = ["BTC-USD", "ETH-USD"]
+
+# ---------------------------------------------------------------- Dukascopy (tick)
+# Tick bid/ask per milidetik. Satu simbol ±24 file per hari. Data tersedia mundur bertahun-tahun.
+[dukascopy]
+aktif = true
+hari_mundur = 3               # setiap jalan harian, pastikan N hari penuh terakhir sudah ada
+paralel = 4                   # unduhan bersamaan
+simbol = ["EURUSD", "GBPUSD", "USDJPY", "AUDUSD", "USDCHF", "USDCAD", "NZDUSD", "XAUUSD", "XAGUSD"]
+# Pembagi harga (Dukascopy menyimpan harga sebagai bilangan bulat). Default: 100000, pasangan JPY 1000,
+# logam 1000. Tambahkan di sini kalau menambah simbol lain, misalnya "BRENT.CMDUSD" = 1000.
+[dukascopy.pembagi]
+XAUUSD = 1000
+XAGUSD = 1000
+
+# ---------------------------------------------------------------- IDX
+# Ringkasan saham harian semua emiten: OHLC, volume, nilai, frekuensi, beli/jual ASING (lot lembar),
+# plus kolom turunan domestik. Ringkasan broker: total transaksi tiap broker di seluruh pasar.
+[idx]
+aktif = true
+ringkasan_saham = true
+ringkasan_broker = true
+hari_mundur = 7               # isi hari bursa yang terlewat (misalnya laptop mati beberapa hari)
