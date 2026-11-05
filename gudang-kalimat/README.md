@@ -15,7 +15,8 @@ lalu menyalinnya ke clipboard dengan sekali klik: balasan chat, template email, 
 
 ## Unduh & jalankan
 
-1. Buka halaman **[Releases](../../releases)** repo ini, unduh `GudangKalimat.zip`, lalu ekstrak (klik kanan → Extract All).
+1. Unduh **[`unduh/GudangKalimat.zip`](unduh/GudangKalimat.zip)** (di halaman file itu, tekan tombol unduh / *Download raw file*),
+   lalu ekstrak (klik kanan → Extract All).
 2. Klik dua kali **`GudangKalimat.exe`**.
    - Kalau muncul layar biru "Windows protected your PC": klik **More info → Run anyway** (aplikasi ini tidak bertanda tangan digital
      berbayar, jadi Windows belum mengenalnya).
@@ -66,5 +67,6 @@ Pilih salah satu, tidak perlu paham teknis:
 
 - Kode: C# WinForms (.NET Framework 4, sintaks C# 5) di `src/`. Tanpa library tambahan; xlsx dibaca/ditulis sendiri.
 - Build di Windows: klik dua kali `build.bat` (memakai compiler bawaan Windows). Di Linux/Mac: `./build.sh` (Mono).
+- Paket unduhan (`unduh/GudangKalimat.zip`) berisi `GudangKalimat.exe`, `contoh-kalimat.xlsx`, dan `BACA-SAYA.txt`.
 - Tes logika data (CSV/XLSX/berbagi file/link Google Sheets): `./tests/jalankan-tes.sh` (Mono).
 - Pengaturan disimpan di `%APPDATA%\GudangKalimat\pengaturan.txt`.

@@ -2,3 +2,4 @@
 *.sh text eol=lf
 *.ico binary
 *.xlsx binary
+*.zip binary
