@@ -145,6 +145,7 @@ namespace GudangKalimat
             baris1.Controls.Add(Tombol("Tambah banyak", "Tempel banyak kalimat sekaligus", delegate { TambahBanyak(); }));
             baris1.Controls.Add(Tombol("Ubah", "Ubah kalimat yang dipilih (F2)", delegate { UbahPilihan(); }));
             baris1.Controls.Add(Tombol("Hapus", "Hapus kalimat yang dipilih (Delete)", delegate { HapusPilihan(); }));
+            baris1.Controls.Add(Tombol("🖼 Gambar → Teks", "Ubah gambar atau tulisan menjadi teks yang bisa ditempel di chat (Ctrl+G)", delegate { BukaGambar(); }));
             baris1.Controls.Add(Pemisah());
             baris1.Controls.Add(Tombol("Impor…", "Tambahkan kalimat dari file Excel (.xlsx), CSV, atau TXT", delegate { Impor(); }));
             baris1.Controls.Add(Tombol("Ekspor…", "Simpan kalimat yang sedang tampil ke Excel (.xlsx), CSV, atau TXT", delegate { Ekspor(); }));
@@ -416,7 +417,34 @@ namespace GudangKalimat
             var p = Pilihan();
             if (p.Count == 0) return;
             var k = p[0];
-            pratinjau.Text = k.Teks;
+            TampilPratinjau(k.Teks);
+        }
+
+        void TampilPratinjau(string teks)
+        {
+            // gambar teks butuh huruf berlebar sama supaya bentuknya tidak bergeser
+            bool art = TeksArt.TerlihatSepertiArt(teks);
+            var f = art ? new Font("Consolas", 8.5f) : new Font(Font.FontFamily, 11f);
+            if (pratinjau.Font.Name != f.Name || Math.Abs(pratinjau.Font.Size - f.Size) > 0.1f) pratinjau.Font = f;
+            pratinjau.WordWrap = !art;
+            pratinjau.Height = art ? 160 : 78;
+            pratinjau.Text = teks;
+        }
+
+        void BukaGambar()
+        {
+            using (var f = new GambarForm(teks =>
+            {
+                var k = new Kalimat { Teks = teks, Dari = set.Nama, Kategori = "Gambar" };
+                if (!Jalankan(() => gudang.Tambah(new[] { k }, true))) return false;
+                IsiFilter();
+                Saring();
+                Status("Gambar teks disimpan ke daftar (kategori Gambar).");
+                return true;
+            }))
+            {
+                f.ShowDialog(this);
+            }
         }
 
         // ------------------------------------------------------------ salin
@@ -461,7 +489,7 @@ namespace GudangKalimat
             var p = Pilihan();
             if (p.Count == 0) return;
             var teks = string.Join("\r\n", p.Select(k => k.Teks));
-            pratinjau.Text = p.Count == 1 ? p[0].Teks : teks;
+            if (p.Count == 1) TampilPratinjau(p[0].Teks); else pratinjau.Text = teks;
             if (KeClipboard(teks)) SetelahSalin(teks);
         }
 
@@ -477,7 +505,7 @@ namespace GudangKalimat
             {
                 if (((Kalimat)it.Tag).Id == k.Id) { it.Selected = true; it.Focused = true; it.EnsureVisible(); break; }
             }
-            pratinjau.Text = k.Teks;
+            TampilPratinjau(k.Teks);
             if (KeClipboard(k.Teks)) SetelahSalin(k.Teks);
         }
 
@@ -747,6 +775,7 @@ namespace GudangKalimat
             if (e.Control && e.KeyCode == Keys.F) { cari.Focus(); cari.SelectAll(); e.Handled = true; }
             else if (e.Control && e.KeyCode == Keys.R) { AcakSalin(); e.Handled = true; }
             else if (e.Control && e.KeyCode == Keys.N) { TambahSatu(); e.Handled = true; }
+            else if (e.Control && e.KeyCode == Keys.G) { BukaGambar(); e.Handled = true; }
             else if (e.KeyCode == Keys.F5) { MuatSemua(true); e.Handled = true; }
         }
 

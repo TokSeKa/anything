@@ -11,6 +11,9 @@ lalu menyalinnya ke clipboard dengan sekali klik: balasan chat, template email, 
 - **Tambah, Tambah banyak, Ubah, Hapus**. "Tambah banyak" = tempel puluhan kalimat sekaligus.
 - **Impor/Ekspor** Excel (.xlsx), CSV, dan TXT (satu kalimat per baris).
 - **Ramai-ramai**: lewat folder bersama (Google Drive/OneDrive/Dropbox) atau Google Sheets. Lihat di bawah.
+- **🖼 Gambar → Teks** (Ctrl+G): ubah gambar (file, tempel dari clipboard, atau seret ke jendela) atau tulisan menjadi
+  gambar dari huruf untuk ditempel di chat. Gaya braille ⣿ (paling detail), blok █▓▒░, atau ASCII; atur lebar, ketebalan,
+  kontras, gradasi, balik warna. Hasilnya bisa disalin, disimpan sebagai kalimat (kategori "Gambar"), atau disimpan .txt.
 - **Ctrl+Alt+K** dari aplikasi mana saja memunculkan Gudang Kalimat; opsi "kecilkan setelah menyalin" supaya bisa langsung tempel.
 
 ## Unduh & jalankan
@@ -52,6 +55,13 @@ Pilih salah satu, tidak perlu paham teknis:
 
 **C. Kirim file**: tekan **Ekspor…** → kirim `.xlsx` lewat WhatsApp/email → penerima tekan **Impor…** (kalimat kembar otomatis dilewati).
 
+## Tips Gambar → Teks
+
+- Untuk WhatsApp di HP, pakai lebar ±30–35 karakter. Kalau bentuknya bergeser, apit hasilnya dengan tiga backtick (```) supaya
+  WhatsApp memakai huruf berlebar sama. Discord dan aplikasi di PC biasanya rapi tanpa itu.
+- Gambar dengan latar polos dan kontras tinggi (logo, stiker, siluet) hasilnya paling bagus. Kalau terlalu gelap/terang,
+  geser **Ketebalan** atau **Kontras**; untuk chat bertema gelap centang **Balik terang/gelap**.
+
 ## Pintasan keyboard
 
 | Tombol | Fungsi |
@@ -61,6 +71,7 @@ Pilih salah satu, tidak perlu paham teknis:
 | ↓ lalu Enter | pilih dari daftar lalu salin |
 | Ctrl+R | Acak + Salin |
 | Ctrl+N / F2 / Delete | tambah / ubah / hapus |
+| Ctrl+G | Gambar → Teks (di jendelanya: Ctrl+V tempel gambar, Ctrl+C salin hasil) |
 | F5 | muat ulang (Sinkron) |
 
 ## Untuk pengembang

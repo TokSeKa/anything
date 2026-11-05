@@ -6,8 +6,8 @@ using System.Windows.Forms;
 [assembly: AssemblyTitle("Gudang Kalimat")]
 [assembly: AssemblyProduct("Gudang Kalimat")]
 [assembly: AssemblyDescription("Simpan kalimat favorit, cari, acak, dan salin dengan sekali klik.")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.1.0.0")]
+[assembly: AssemblyFileVersion("1.1.0.0")]
 
 namespace GudangKalimat
 {

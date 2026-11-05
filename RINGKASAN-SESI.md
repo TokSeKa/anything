@@ -77,6 +77,7 @@ Daftar simbol di `simbol.toml`.
 Aplikasi Windows WinForms (.NET Framework 4, C# 5, ±85 KB, offline, tanpa instalasi): daftar kalimat (Kalimat/Dari/Kategori), cari,
 📋 Salin, 🎲 Acak + Salin, tambah/tambah banyak/ubah/hapus, impor/ekspor xlsx/csv/txt, data di `kalimat.csv` (edit di Excel),
 berbagi lewat folder Google Drive/OneDrive (muat otomatis, simpan dengan baca-ulang) atau link Google Sheets (baca + cache), Ctrl+Alt+K.
+v1.1: **Gambar → Teks** (Ctrl+G): gambar/tulisan → teks braille/blok/ASCII untuk chat; salin, simpan jadi kalimat, atau .txt.
 Unduhan siap pakai: `gudang-kalimat/unduh/GudangKalimat.zip`. Build: `build.bat` (Windows) / `build.sh` (Mono).
 
 ## 4. Status pengujian
@@ -85,7 +86,7 @@ Unduhan siap pakai: `gudang-kalimat/unduh/GudangKalimat.zip`. Build: `build.bat`
 |---|---|---|
 | Suit, Kilas, Arena Mabar | 190 tes backend lolos (`cd backend && pytest -q`), E2E Playwright semua game, image Docker dibangun & dijalankan | dimainkan teman sungguhan; deploy VPS nyata |
 | pengumpul-data | 15 tes dengan data contoh; penanganan gagal saat jaringan ditolak; image Docker | **belum pernah mengambil data sungguhan** (sandbox menolak Yahoo, Dukascopy, IDX). Paling berisiko: endpoint & nama kolom JSON IDX (Cloudflare), kode simbol yang berganti |
-| Gudang Kalimat | 27 tes logika data (Mono); dijalankan di Xvfb: cari, acak+salin, tambah, muat ulang otomatis | **belum dijalankan di Windows asli**; Ctrl+Alt+K; Google Sheets sungguhan |
+| Gudang Kalimat | 34 tes (data + gambar→teks) dengan Mono; dijalankan di Xvfb: cari, acak+salin, tambah, muat ulang otomatis, gambar→teks dari file & tulisan, salin, simpan | **belum dijalankan di Windows asli**; Ctrl+Alt+K; Google Sheets sungguhan; tempel gambar dari clipboard (Mono tidak mendukung, Windows seharusnya bisa) |
 
 ## 5. Yang belum / langkah berikutnya
 

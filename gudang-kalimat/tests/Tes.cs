@@ -111,6 +111,33 @@ static class Tes
         var on = Online.DariTeks("Kalimat,Dari\nDari sheet,Dewi\n");
         Cek(on.Count == 1 && on[0].Online && on[0].Dari == "Dewi", "data online ditandai");
 
+        // ---- gambar → teks
+        using (var bmp = new System.Drawing.Bitmap(80, 40))
+        {
+            using (var g = System.Drawing.Graphics.FromImage(bmp))
+            {
+                g.Clear(System.Drawing.Color.White);
+                g.FillRectangle(System.Drawing.Brushes.Black, 0, 0, 40, 40);    // separuh kiri hitam
+            }
+            var br = TeksArt.Buat(bmp, new OpsiArt { Gaya = GayaArt.Braille, Lebar = 10, Dither = false });
+            var bb = br.Split(new[] { "\r\n" }, StringSplitOptions.None);
+            Cek(bb.Length == 2 && bb.All(l => l.Length == 10), "braille: 10 kolom, 2 baris (rasio 2:1), dapat " + bb.Length + " baris");
+            Cek(bb[0].Substring(0, 5) == "\u28FF\u28FF\u28FF\u28FF\u28FF" && bb[0].Substring(5) == "\u2800\u2800\u2800\u2800\u2800",
+                "braille: kiri penuh, kanan kosong (U+2800)");
+            var asc = TeksArt.Buat(bmp, new OpsiArt { Gaya = GayaArt.Ascii, Lebar = 10 }).Split(new[] { "\r\n" }, StringSplitOptions.None);
+            Cek(asc.Length == 2 && asc[0] == "@@@@@", "ascii: gelap = @, spasi ujung dibuang");
+            var blk = TeksArt.Buat(bmp, new OpsiArt { Gaya = GayaArt.Blok, Lebar = 10, Balik = true }).Split(new[] { "\r\n" }, StringSplitOptions.None);
+            Cek(blk[0] == "     \u2588\u2588\u2588\u2588\u2588", "blok + balik warna");
+            var dith = TeksArt.Buat(bmp, new OpsiArt { Lebar = 10, Dither = true });
+            Cek(dith.Length == br.Length, "braille dither ukuran sama");
+            Cek(TeksArt.TerlihatSepertiArt(br) && !TeksArt.TerlihatSepertiArt("Halo\r\napa kabar"), "deteksi teks gambar");
+        }
+        using (var tul = TeksArt.GambarTulisan("HI", "Arial", true))
+        {
+            var art = TeksArt.Buat(tul, new OpsiArt { Lebar = 20, Dither = false });
+            Cek(art.Contains('\u28FF') && art.Split('\n').Length >= 2, "tulisan besar jadi braille");
+        }
+
         Console.WriteLine(lulus + " lulus, " + gagal + " gagal");
         return gagal == 0 ? 0 : 1;
     }
